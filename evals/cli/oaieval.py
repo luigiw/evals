@@ -1,6 +1,7 @@
 """
 This file defines the `oaieval` CLI for running evals.
 """
+import os
 import argparse
 import logging
 import shlex
@@ -235,6 +236,11 @@ def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None
 
 
 def main():
+    openai.api_type = "azure"
+    openai.api_version = "2023-03-15-preview" 
+    openai.api_base = os.getenv("OPENAI_API_BASE")  # Your Azure OpenAI resource's endpoint value.
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+
     parser = get_parser()
     args = parser.parse_args(sys.argv[1:])
     logging.basicConfig(

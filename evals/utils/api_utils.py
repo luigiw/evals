@@ -62,6 +62,7 @@ def openai_completion_create_retrying(*args, **kwargs):
     if kwargs["model"] == "dummy-completion":
         return generate_dummy_completion()
 
+    kwargs["engine"]="text-davinci-003"
     result = openai.Completion.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
